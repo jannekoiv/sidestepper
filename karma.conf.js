@@ -16,7 +16,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'public_html/**/*.js',
-      'test/**/*Spec.js'
+      'test/**/*Spec.js',
+      {pattern: '*.png', watched: false, included: false, served: true}
     ],
 
     // list of files to exclude
