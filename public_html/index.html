@@ -19,43 +19,10 @@ and open the template in the editor.
 
         <script type="text/javascript">
 
+        var game = new Game();
+        window.onload = game.run();
 
 
-            var base = {
-                show: function () {
-                    alert("I'm basic.");
-                },
-                create: function () {
-                    var obj = Object.create(this);
-                    return obj;
-                }
-            };
-
-            var advanced = {
-                show2: function () {
-                    alert("I'm advanced.");
-                },
-                create: function () {
-                    var obj = Object.create(this);
-                    obj.show = base.show;
-                    return obj;
-                }
-            };
-
-            var advanced = Object.create(base,
-                    {
-                        show2: {value: function () {
-                            alert("I'm advanced");
-                        }},
-                        create: {value: function () {
-                            var obj = Object.create(this);
-                            return obj;
-                        }}
-                    });
-
-            var obj1 = base.create();
-            var obj2 = advanced.create();
-            alert(obj1.isPrototypeOf(obj2));
 
 
         </script>

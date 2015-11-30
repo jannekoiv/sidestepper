@@ -8,8 +8,8 @@
 function Game() {
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
-    AnimatedImage.setContext(context);
-    var image = new AnimatedImage("sepi.png");
+    animatedImage.setContext(context);
+    var image = animatedImage.create("sepi.png");
     var position = new Vector(100, 100);
     var frame = 1;
     counter = 0;

@@ -5,5 +5,5 @@
  */
 
 function BaseObject(filename) {
-    this.image = new AnimatedImage(filename);
+//    this.image = new AnimatedImage(filename);
 };
