@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <canvas id="myCanvas" width="1280" height="960" style="border:1px solid #000000; margin-left: auto; margin-right: auto; display: block; width: 1280px;"> </canvas> 
+        <script src = "vector.js"></script>
+        <script src = "animatedImage.js"></script>
+        <script src = "baseObject.js"></script>
+        <script src = "game.js"></script>
+
+        <script type="text/javascript">
+
+
+
+            var base = {
+                show: function () {
+                    alert("I'm basic.");
+                },
+                create: function () {
+                    var obj = Object.create(this);
+                    return obj;
+                }
+            };
+
+            var advanced = {
+                show2: function () {
+                    alert("I'm advanced.");
+                },
+                create: function () {
+                    var obj = Object.create(this);
+                    obj.show = base.show;
+                    return obj;
+                }
+            };
+
+            var advanced = Object.create(base,
+                    {
+                        show2: {value: function () {
+                            alert("I'm advanced");
+                        }},
+                        create: {value: function () {
+                            var obj = Object.create(this);
+                            return obj;
+                        }}
+                    });
+
+            var obj1 = base.create();
+            var obj2 = advanced.create();
+            alert(obj1.isPrototypeOf(obj2));
+
+
+        </script>
+    </body>
+</html>
