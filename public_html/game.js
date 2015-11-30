@@ -6,15 +6,33 @@
 
 
 function Game() {
-    this.init = function () {
-        this.canvas = document.getElementById("myCanvas");
-        this.context = this.canvas.getContext("2d");
-        this.image = new AnimatedImage("sepi.png", this.context);
-        this.position = new Vector(100, 100);
-    };
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext("2d");
+    AnimatedImage.setContext(context);
+    var image = new AnimatedImage("sepi.png");
+    var position = new Vector(100, 100);
+    var frame = 1;
+    counter = 0;
+
+
+
+
+
 
     this.run = function () {
-        this.image.draw(this.position, 0);
-        this.position.x += 10;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        image.draw(position, frame);
+        position.x += 1;
+        counter += 1;
+
+        if (counter > 2) {
+            counter = 0;
+            frame += 1;
+            if (frame >= image.getFrameCount()) {
+                frame = 0;
+            }
+        }
+
+        requestAnimationFrame(this.run.bind(this));
     };
 }

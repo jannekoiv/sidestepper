@@ -67,7 +67,7 @@ describe("AnimatedImage", function () {
 });
 
 describe("getFrameSize", function () {
-    it("returns size of single image frame as vector", function () {
+    it("returns size of single animation frame as vector", function () {
         var image = new AnimatedImage("");
         expect(image.getFrameSize().x).toEqual(0);
         expect(image.getFrameSize().y).toEqual(0);
@@ -76,9 +76,9 @@ describe("getFrameSize", function () {
 
 
 describe("getFrameCount", function () {
-    it("return number of animation frames in animated image", function () {
+    it("return number of animation frames", function () {
         var image = new AnimatedImage("");
-        expect(image.getFrameCount()).toEqual(0);
+        expect(image.frameCount).toEqual(0);
     });
 });
 

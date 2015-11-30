@@ -5,11 +5,8 @@
  */
 "use strict";
 
-var IMAGE_SIZE_X = 32;
-var IMAGE_SIZE_Y = 32;
 var DESTINATION_SIZE_X = 64;
 var DESTINATION_SIZE_Y = 64;
-
 
 function AnimatedImage(filename) {
     this.image = new Image();
@@ -35,40 +32,38 @@ AnimatedImage.setContext = function (context) {
 AnimatedImage.prototype.loadCallback = function () {
     this.frameSize = new Vector(this.image.width, this.image.width);
     this.frameCount = Math.floor(this.image.height / this.image.width);
-    AnimatedImage.loadCallback();
+    if (typeof AnimatedImage.loadCallback === 'function') {
+        AnimatedImage.loadCallback();
+    }
 };
 
 AnimatedImage.prototype.errorCallback = function () {
     this.frameSize = new Vector(0, 0);
     this.frameCount = 0;
-    AnimatedImage.errorCallback();
+    if (typeof AnimatedImage.errorCallback === 'function') {
+        AnimatedImage.errorCallback();
+    }
 };
 
-AnimatedImage.prototype.getFrameSize = function() {
+AnimatedImage.prototype.getFrameSize = function () {
     return this.frameSize;
 };
 
-AnimatedImage.prototype.getFrameCount = function() {
+AnimatedImage.prototype.getFrameCount = function () {
     return this.frameCount;
 };
 
+AnimatedImage.prototype.draw = function (position, frameNumber) {
+    var sourcePosition = new Vector(0, frameNumber * this.frameSize.y);
+    var destinationSize = new Vector(DESTINATION_SIZE_X, DESTINATION_SIZE_Y);
+    AnimatedImage.context.drawImage(this.image,
+            sourcePosition.x,
+            sourcePosition.y,
+            this.frameSize.x,
+            this.frameSize.y,
+            position.x,
+            position.y,
+            destinationSize.x,
+            destinationSize.y);
+};
 
-
-
-
-
-//this.draw = function (position, frameNumber) {
-//    var sourcePosition = new Vector(0, frameNumber * this.size.y);
-//    var destinationSize = new Vector(DESTINATION_SIZE_X, DESTINATION_SIZE_Y);
-//    context.drawImage(this.image,
-//            sourcePosition.x,
-//            sourcePosition.y,
-//            this.size.x,
-//            this.size.y,
-//            position.x,
-//            position.y,
-//            destinationSize.x,
-//            destinationSize.y);
-//};
-//this.getFrameCount = function () {
-//};

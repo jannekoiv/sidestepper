@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 
-function BaseObject() {
-    this.size = new Vector(0, 0);
-
-}
-
-
+function BaseObject(filename) {
+    this.image = new AnimatedImage(filename);
+};

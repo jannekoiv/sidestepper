@@ -5,11 +5,13 @@
  */
 
 describe("BaseObject", function () {
-    it("Constructs empty base object", function () {
-        var object = new BaseObject();
-        expect(object.size.x).toEqual(0);
-        expect(object.size.y).toEqual(0);
+    it("constructs animated image from filename", function () {
+        var spy = spyOn(window, "AnimatedImage");
+        var baseObject = new BaseObject("base/sepi.png");
+//        var baseObject = Object.create(BaseObject);
+        expect(spy).toHaveBeenCalledWith("base/sepi.png");
     });
 });
+
 
 
