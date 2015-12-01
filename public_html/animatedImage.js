@@ -28,14 +28,14 @@ var animatedImage = {
         return this.frameCount;
     },
     onLoad: function () {
-        this.frameSize = new Vector(this.image.width, this.image.width);
+        this.frameSize = vector2.create(this.image.width, this.image.width);
         this.frameCount = Math.floor(this.image.height / this.image.width);
         if (typeof animatedImage.loadCallback === 'function') {
             animatedImage.loadCallback();
         }
     },
     onError: function () {
-        this.frameSize = new Vector(0, 0);
+        this.frameSize = vector2.create(0, 0);
         this.frameCount = 0;
         if (typeof animatedImage.errorCallback === 'function') {
             animatedImage.errorCallback();
@@ -43,17 +43,21 @@ var animatedImage = {
     },
     create: function (filename) {
         var newImage = Object.create(animatedImage);
-        newImage.image = new Image();
-        newImage.frameSize = new Vector(0, 0);
+//        newImage.image = new Image();
+        newImage.image = animatedImage.createSystemImage();
+        newImage.frameSize = vector2.create(0, 0);
         newImage.frameCount = 0;
         newImage.image.onload = this.onLoad.bind(newImage);
         newImage.image.onerror = this.onError.bind(newImage);
         newImage.image.src = filename;
         return newImage;
     },
+    createSystemImage: function () {
+        return new Image();
+    },
     draw: function (position, frameNumber) {
-        var sourcePosition = new Vector(0, frameNumber * this.frameSize.y);
-        var destinationSize = new Vector(DESTINATION_SIZE_X, DESTINATION_SIZE_Y);
+        var sourcePosition = vector2.create(0, frameNumber * this.frameSize.y);
+        var destinationSize = vector2.create(DESTINATION_SIZE_X, DESTINATION_SIZE_Y);
         animatedImage.context.drawImage(this.image,
                 sourcePosition.x,
                 sourcePosition.y,

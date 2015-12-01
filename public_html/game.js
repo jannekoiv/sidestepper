@@ -10,7 +10,7 @@ function Game() {
     var context = canvas.getContext("2d");
     animatedImage.setContext(context);
     var image = animatedImage.create("sepi.png");
-    var position = new Vector(100, 100);
+    var position = vector2.create(100, 100);
     var frame = 1;
     counter = 0;
 
@@ -20,6 +20,7 @@ function Game() {
 
 
     this.run = function () {
+
         context.clearRect(0, 0, canvas.width, canvas.height);
         image.draw(position, frame);
         position.x += 1;
