@@ -42,15 +42,14 @@ var animatedImage = {
         }
     },
     create: function (filename) {
-        var newImage = Object.create(animatedImage);
-//        newImage.image = new Image();
-        newImage.image = animatedImage.createSystemImage();
-        newImage.frameSize = vector2.create(0, 0);
-        newImage.frameCount = 0;
-        newImage.image.onload = this.onLoad.bind(newImage);
-        newImage.image.onerror = this.onError.bind(newImage);
-        newImage.image.src = filename;
-        return newImage;
+        var newObject = Object.create(animatedImage);
+        newObject.image = animatedImage.createSystemImage();
+        newObject.frameSize = vector2.create(0, 0);
+        newObject.frameCount = 0;
+        newObject.image.onload = this.onLoad.bind(newObject);
+        newObject.image.onerror = this.onError.bind(newObject);
+        newObject.image.src = filename;
+        return newObject;
     },
     createSystemImage: function () {
         return new Image();

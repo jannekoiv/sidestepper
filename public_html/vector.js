@@ -6,10 +6,10 @@
 
 var vector2 = {
     create: function (x, y) {
-        var newVector = Object.create(vector2);
-        newVector.x = x;
-        newVector.y = y;
-        return newVector;
+        var newObject = Object.create(vector2);
+        newObject.x = x;
+        newObject.y = y;
+        return newObject;
     },
     add: function(vector) {
         this.x += vector.x;
