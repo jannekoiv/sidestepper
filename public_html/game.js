@@ -9,31 +9,12 @@ function Game() {
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
     animatedImage.setContext(context);
-    var image = animatedImage.create("sepi.png");
-    var position = vector2.create(100, 100);
-    var frame = 1;
-    counter = 0;
-
-
-
-
+    var level1 = level.create();
 
 
     this.run = function () {
-
         context.clearRect(0, 0, canvas.width, canvas.height);
-        image.draw(position, frame);
-        position.x += 1;
-        counter += 1;
-
-        if (counter > 2) {
-            counter = 0;
-            frame += 1;
-            if (frame >= image.getFrameCount()) {
-                frame = 0;
-            }
-        }
-
+        level1.draw();
         requestAnimationFrame(this.run.bind(this));
     };
 }
