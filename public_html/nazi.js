@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 
-var enemy = {
-    create: function(position) {
-        var newObject = Object.create(enemy);
-        newObject.image = animatedImage.create('natsi.bmp');
-        newObject.position = vector2.create(position.x, position.y);
-        return newObject;
-    },
-    draw: function() {
-        this.image.draw(this.position, 0);
-    }
+var nazi = {
+	create: function (position) {
+		var newObject = Object.create(nazi);
+		newObject.image = animatedImage.create('natsi.bmp');
+		newObject.position = vector2.create(position.x, position.y);
+		return newObject;
+	},
+	draw: function () {
+		this.image.draw(this.position, 0);
+	}
 };

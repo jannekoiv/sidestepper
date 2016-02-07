@@ -295,9 +295,8 @@
             }
         }
     ],
-    "enemies": [
+    "nazis": [
         {
-            "type": "nazi",
             "position": {
                 "x": 400,
                 "y": 400
