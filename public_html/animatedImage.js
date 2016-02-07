@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/* global vector2 */
+
 "use strict";
 
-var DESTINATION_SIZE_X = 64;
-var DESTINATION_SIZE_Y = 64;
-
+var SCALING_FACTOR = 1.0;
 var animatedImage = {
     loadCallback: null,
     errorCallback: null,
@@ -56,14 +56,17 @@ var animatedImage = {
     },
     draw: function (position, frameNumber) {
         var sourcePosition = vector2.create(0, frameNumber * this.frameSize.y);
-        var destinationSize = vector2.create(DESTINATION_SIZE_X, DESTINATION_SIZE_Y);
+        var destinationSize = vector2.create(this.frameSize.x, this.frameSize.y);
+        destinationSize.multiply(SCALING_FACTOR);
+		var scaledPosition = vector2.create(position.x, position.y);
+		scaledPosition.multiply(SCALING_FACTOR);
         animatedImage.context.drawImage(this.image,
                 sourcePosition.x,
                 sourcePosition.y,
                 this.frameSize.x,
                 this.frameSize.y,
-                position.x,
-                position.y,
+                scaledPosition.x,
+                scaledPosition.y,
                 destinationSize.x,
                 destinationSize.y);
     }
