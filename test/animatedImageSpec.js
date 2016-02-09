@@ -60,7 +60,6 @@ describe("create", function () {
         image = animatedImage.create("badfilename");
     });
     it("constructs empty, size 0 image from nonexisting filename", function () {
-        alert(image.frameCount);
         expect(image.frameSize.x).toEqual(0);
         expect(image.frameSize.y).toEqual(0);
         expect(image.frameCount).toEqual(0);
