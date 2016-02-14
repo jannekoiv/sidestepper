@@ -1,17 +1,24 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
  */
 
-var tile = {
-    create: function(position) {
-        var newObject = Object.create(tile);
-        newObject.image = animatedImage.create('tile1.bmp');
-        newObject.position = vector2.create(position.x, position.y);
-        return newObject;
-    },
-    draw: function() {
-        this.image.draw(this.position, 1);
-    }
+var TILE_SIZE_X = 32;
+var TILE_SIZE_Y = 32;
+
+var createTile = function (position) {
+    return {
+        image: createAnimatedImage('tile1.bmp'),
+        position: createVector(position.x, position.y),
+        velocity: createVector(0.0, 0.0),
+        size: createVector(TILE_SIZE_X, TILE_SIZE_Y),
+        update: function () {
+            this.position.add(this.velocity);
+        },
+        draw: function () {
+            this.image.draw(this.position, 1);
+        },
+        calculateCenterPosition: function () {
+            return createVector(this.position.x + this.size.x / 2, this.position.y + this.size.y / 2);
+        }
+    };
 };
+

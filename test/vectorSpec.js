@@ -1,28 +1,29 @@
-
+/*
+ */
 
 var SQUARE_ROOT_OF_TWO = Math.sqrt(2.0);
 
-describe("createcreateVector", function() {
-    it("creates new vector from x and y", function() {
+describe('createVector', function () {
+    it('creates new vector from x and y', function () {
         var vector = createVector(1.0, 2.0);
         expect(vector.x).toBeCloseTo(1.0);
         expect(vector.y).toBeCloseTo(2.0);
     });
 });
 
-describe("add", function() {
-    it("adds second vector to first vector and returns first vector", function() {
+describe('add', function () {
+    it('adds second vector to first vector and returns first vector', function () {
         var vectorA = createVector(1.0, 2.0);
         var vectorB = createVector(0.1, 0.2);
         var result = vectorA.add(vectorB);
         expect(result.x).toBeCloseTo(1.1);
         expect(result.y).toBeCloseTo(2.2);
-        var hoo = createVector(1,1);
+        var hoo = createVector(1, 1);
     });
 });
 
-describe("subtract", function() {
-    it("subtracts second vector from first vector and returns first vector", function() {
+describe('subtract', function () {
+    it('subtracts second vector from first vector and returns first vector', function () {
         var vectorA = createVector(1.0, 2.0);
         var vectorB = createVector(0.1, 0.2);
         var result = vectorA.subtract(vectorB);
@@ -31,8 +32,8 @@ describe("subtract", function() {
     });
 });
 
-describe("multiply", function() {
-    it("multiplies vector by scalar and returns it", function() {
+describe('multiply', function () {
+    it('multiplies vector by scalar and returns it', function () {
         var vector = createVector(1.0, 2.0);
         var scalar = 10.0;
         var result = vector.multiply(scalar);
@@ -41,8 +42,8 @@ describe("multiply", function() {
     });
 });
 
-describe("divide", function() {
-    it("divides vector by scalar and returns it", function() {
+describe('divide', function () {
+    it('divides vector by scalar and returns it', function () {
         var vector = createVector(10.0, 20.0);
         var scalar = 10.0;
         var result = vector.divide(scalar);
@@ -51,16 +52,16 @@ describe("divide", function() {
     });
 });
 
-describe("length", function() {
-    it("returns length of vector", function() {
+describe('length', function () {
+    it('returns length of vector', function () {
         var vector = createVector(1.0, 1.0);
         var result = vector.length();
         expect(result).toBeCloseTo(SQUARE_ROOT_OF_TWO);
     });
 });
 
-describe("normalize", function() {
-    it("normalizes vector and returns it", function() {
+describe('normalize', function () {
+    it('normalizes vector and returns it', function () {
         var vector = createVector(1.0, 1.0);
         var result = vector.normalize();
         expect(result.x).toBeCloseTo(SQUARE_ROOT_OF_TWO);

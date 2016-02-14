@@ -7,10 +7,13 @@
 var nazi = {
 	create: function (position) {
 		var newObject = Object.create(nazi);
-		newObject.image = animatedImage.create('natsi.bmp');
-		newObject.position = vector2.create(position.x, position.y);
+		newObject.image = createAnimatedImage('natsi.bmp');
+		newObject.position = createVector(position.x, position.y);
 		return newObject;
 	},
+    update: function() {
+
+    },
 	draw: function () {
 		this.image.draw(this.position, 0);
 	}

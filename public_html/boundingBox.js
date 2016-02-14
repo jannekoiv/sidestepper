@@ -1,27 +1,25 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/*
  */
 
-/* global vector2 */
-
-var boundingBox = {
-    create: function (position, size) {
-        var newObject = Object.create(boundingBox);
-        newObject.position = vector2.create(position.x, position.y);
-        newObject.size = vector2.create(size.x, size.y);
-        return newObject;
-    },
-    testCollision: function (boundingBox) {
-        var halfSizeSum = vector2.create(this.size.x + boundingBox.size.x, this.size.y + boundingBox.size.y);
-        halfSizeSum.divide(2.0);
-        var distance = vector2.create(this.position.x, this.position.y);
-        distance.subtract(boundingBox.position);
-        if (Math.abs(distance.x) < halfSizeSum.x) {
-            return true;
-        } else {
-            return false;
+var createBoundingBox = function(position, size) {
+    return {
+        position: createVector(position.x, position.y),
+        size: createVector(size.x, size.y),
+        calculateDistance: function (boundingBox) {
+            return createVector(this.position.x, this.position.y).subtract(boundingBox.position);
+        },
+        calculateHalfSizeSum: function (boundingBox) {
+            return createVector(this.size.x + boundingBox.size.y, this.size.y + boundingBox.size.y).divide(2.0);
+        },
+        testCollision: function (boundingBox) {
+            var distance = this.calculateDistance(boundingBox);
+            var halfSizeSum = this.calculateHalfSizeSum(boundingBox);
+            if (Math.abs(distance.x) < halfSizeSum.x && Math.abs(distance.y) < halfSizeSum.y) {
+                return true;
+            } else {
+                return false;
+            }
         }
-    }
+    };
 };
+
