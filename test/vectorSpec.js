@@ -11,6 +11,15 @@ describe('createVector', function () {
     });
 });
 
+describe('clone', function () {
+    it('creates new vector by cloning existing vector', function () {
+        var vector = createVector(1.0, 2.0);
+        var result = vector.clone();
+        expect(result.x).toBeCloseTo(1.0);
+        expect(result.y).toBeCloseTo(2.0);
+    });
+});
+
 describe('add', function () {
     it('adds second vector to first vector and returns first vector', function () {
         var vectorA = createVector(1.0, 2.0);

@@ -5,6 +5,9 @@ var createVector = function (x, y) {
     return {
         x: x,
         y: y,
+        clone: function() {
+            return createVector(this.x, this.y);
+        },
         add: function (vector) {
             this.x += vector.x;
             this.y += vector.y;
@@ -35,4 +38,4 @@ var createVector = function (x, y) {
             return this;
         }
     };
-}
+};

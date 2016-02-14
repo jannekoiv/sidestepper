@@ -37,14 +37,11 @@ var createLevel = function () {
         }
     };
     $.getJSON('leveldata.json', function (leveldata) {
-        newObject.player = createPlayer(leveldata.player.position);
+        newObject.player = createPlayer(createVector(leveldata.player.position.x, leveldata.player.position.y));
         leveldata.tiles.forEach(function (tileData) {
-            newObject.tiles.push(createTile(tileData.position));
+            newObject.tiles.push(createTile(createVector(tileData.position.x, tileData.position.y)));
         });
         newObject.tiles[1].velocity.x = 1;
-        leveldata.nazis.forEach(function (enemyData) {
-            newObject.nazis.push(nazi.create(enemyData.position));
-        });
     });
     return newObject;
 };

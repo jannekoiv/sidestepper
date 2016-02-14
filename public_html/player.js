@@ -12,10 +12,10 @@ var ylaskuri = 0;
 var createPlayer = function(position) {
     return {
         image: createAnimatedImage('sepi.bmp'),
-        position: createVector(position.x, position.y),
+        position: position.clone(),
         velocity: createVector(0.0, 0.0),
         baseVelocity: createVector(0.0, 0.0),
-        previousPosition: createVector(position.x, position.y),
+        previousPosition: position.clone(),
         size: createVector(PLAYER_SIZE_X, PLAYER_SIZE_Y),
         walk: function () {
             if (keys & LEFT) {
@@ -83,7 +83,7 @@ var createPlayer = function(position) {
             this.image.draw(this.position, 2);
         },
         calculateCenterPosition: function () {
-            return createVector(this.position.x + this.size.x / 2, this.position.y + this.size.y / 2);
+            return createVector(this.position.x + this.size.x / 2.0, this.position.y + this.size.y / 2.0);
         },
         testCollision: function (object) {
             var boundingBoxA = createBoundingBox(this.calculateCenterPosition(), this.size);
@@ -105,7 +105,7 @@ var createPlayer = function(position) {
             this.previousPosition.y = this.position.y;
         },
         restorePositionX: function (tile) {
-            var direction = createVector(this.position.x, this.position.y).subtract(tile.position);
+            var direction = this.position.clone().subtract(tile.position);
             direction.normalize();
             direction.x *= 0.1;
             while (this.testCollision(tile)) {
@@ -113,7 +113,7 @@ var createPlayer = function(position) {
             }
         },
         restorePositionY: function (tile) {
-            var direction = createVector(this.position.x, this.position.y).subtract(tile.position);
+            var direction = this.position.clone().subtract(tile.position);
             direction.normalize();
             direction.y *= 0.1;
             while (this.testCollision(tile)) {
