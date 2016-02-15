@@ -9,7 +9,7 @@ var JUMP_VELOCITY = 4;
 var xlaskuri = 0;
 var ylaskuri = 0;
 
-var createPlayer = function(position) {
+var createPlayer = function (position) {
     return {
         image: createAnimatedImage('sepi.bmp'),
         position: position.clone(),
@@ -49,32 +49,29 @@ var createPlayer = function(position) {
             this.walk();
             this.jump(tiles);
             this.accelerateByGravity();
-
             this.storePosition();
 
+
+            this.position.x += this.velocity.x + this.baseVelocity.x;
             this.baseVelocity.x = 0.0;
             this.baseVelocity.y = 0.0;
+            for (i = 0; i < tiles.length; i++) {
+                if (this.testCollision(tiles[i])) {
+                    this.restorePositionX(tiles[i]);
+                }
+            }
 
-
-            this.position.y += this.velocity.y;
+            this.position.y += this.velocity.y + this.baseVelocity.y;
             for (i = 0; i < tiles.length; i++) {
                 if (this.testCollision(tiles[i])) {
                     this.velocity.y = 0.0;
                     this.restorePositionY(tiles[i]);
-//                if(tiles[i].velocity.length() > 0.0) {
-//                    this.baseVelocity.x = tiles[i].velocity.x;
-//                }
+                    if (tiles[i].velocity.length() > 0.0) {
+                        this.baseVelocity.x = tiles[i].velocity.x;
+                        this.baseVelocity.y = tiles[i].velocity.y;
+                    }
                 }
             }
-
-//        this.position.x += this.velocity.x + this.baseVelocity.x;
-//        for (i = 0; i < tiles.length; i++) {
-//            if (this.testCollision(tiles[i])) {
-//                this.restorePositionX(tiles[i]);
-//                this.velocity.x = 0.0;
-//            }
-//        }
-
 
         },
 
