@@ -73,7 +73,7 @@ describe('normalize', function () {
     it('normalizes vector and returns it', function () {
         var vector = createVector(1.0, 1.0);
         var result = vector.normalize();
-        expect(result.x).toBeCloseTo(SQUARE_ROOT_OF_TWO);
-        expect(result.y).toBeCloseTo(SQUARE_ROOT_OF_TWO);
+        expect(result.x).toBeCloseTo(1.0 / SQUARE_ROOT_OF_TWO);
+        expect(result.y).toBeCloseTo(1.0 / SQUARE_ROOT_OF_TWO);
     });
 });

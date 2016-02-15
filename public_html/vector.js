@@ -33,8 +33,8 @@ var createVector = function (x, y) {
         },
         normalize: function () {
             var length = Math.sqrt(this.x * this.x + this.y * this.y);
-            this.x *= length;
-            this.y *= length;
+            this.x /= length;
+            this.y /= length;
             return this;
         }
     };
