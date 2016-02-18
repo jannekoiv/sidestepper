@@ -38,6 +38,7 @@ describe('subtract', function () {
         var result = vectorA.subtract(vectorB);
         expect(result.x).toBeCloseTo(0.9);
         expect(result.y).toBeCloseTo(1.8);
+        expect(result.y).tobe
     });
 });
 

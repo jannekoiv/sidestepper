@@ -1,7 +1,7 @@
 /*
  */
 
-var SCALING_FACTOR = 1.0;
+var SCALING_FACTOR = 2.0;
 
 var animatedImageGlobalData = {
     loadCallback: null,
