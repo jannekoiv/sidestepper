@@ -8,7 +8,7 @@ var nazi = {
 	create: function (position) {
 		var newObject = Object.create(nazi);
 		newObject.image = createAnimatedImage('natsi.bmp');
-		newObject.position = createVector(position.x, position.y);
+		newObject.position = position.clone();
 		return newObject;
 	},
     update: function() {

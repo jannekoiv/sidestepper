@@ -4,7 +4,7 @@
 var LEFT = 1;
 var RIGHT = 2;
 var UP = 4;
-var DOWN = 8;
+var FLY = 16;
 var keys = 0;
 var prevKeys = 0;
 
@@ -18,8 +18,8 @@ function onKeyDown(event) {
     if (event.keyCode === 38) {
         keys |= UP;
     }
-    if (event.keyCode === 40) {
-        keys |= DOWN;
+    if (event.keyCode === 87) {
+        keys |= FLY;
     }
 }
 
@@ -29,15 +29,15 @@ function onClick(event) {
 
 function onKeyUp(event) {
     if (event.keyCode === 37) {
-        keys &= (RIGHT | UP | DOWN);
+        keys &= (RIGHT | UP | FLY);
     }
     if (event.keyCode === 39) {
-        keys &= (LEFT | UP | DOWN);
+        keys &= (LEFT | UP | FLY);
     }
     if (event.keyCode === 38) {
-        keys &= (LEFT | RIGHT | DOWN);
+        keys &= (LEFT | RIGHT | FLY);
     }
-    if (event.keyCode === 40) {
+    if (event.keyCode === 87) {
         keys &= (LEFT | RIGHT | UP);
     }
 }

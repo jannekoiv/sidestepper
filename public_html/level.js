@@ -2,7 +2,7 @@
  */
 
 var createLevel = function () {
-    var newObject = {
+    return {
         tiles: [],
         nazis: [],
         updatePlayer: function () {
@@ -25,8 +25,18 @@ var createLevel = function () {
         update: function () {
             if (this.tiles.length > 0) {
                 this.tiles[1].position.add(this.tiles[1].velocity);
-                if (this.tiles[1].position.x > 500 || this.tiles[1].position.x < 50) {
-                    this.tiles[1].velocity.x *= -1.0;
+                this.tiles[1].position = this.tiles[1].position.add(this.tiles[1].velocity);
+                if (this.tiles[1].position.getX() > 500 || this.tiles[1].position.getX() < 50) {
+                    this.tiles[1].velocity = createVector(
+                        this.tiles[1].velocity.getX() * -1.0, this.tiles[1].velocity.getY());
+
+                }
+                this.tiles[4].position.add(this.tiles[4].velocity);
+                this.tiles[4].position = this.tiles[4].position.add(this.tiles[4].velocity);
+                if (this.tiles[4].position.getY() > 400 || this.tiles[4].position.getY() < 50) {
+                    this.tiles[4].velocity = createVector(
+                        this.tiles[4].velocity.getX(), this.tiles[4].velocity.getY() * -1.0);
+
                 }
             }
             this.updatePlayer(this.tiles);
@@ -34,16 +44,20 @@ var createLevel = function () {
         draw: function () {
             this.drawPlayer();
             this.drawTiles();
+        },
+        init: function() {
+            var self = this;
+            $.getJSON('leveldata.json', function (leveldata) {
+                self.player = createPlayer(createVector(leveldata.player.position.x, leveldata.player.position.y));
+                leveldata.tiles.forEach(function (tileData) {
+                    self.tiles.push(createTile(createVector(tileData.position.x, tileData.position.y)));
+                });
+                self.tiles[1].velocity = createVector(-1.0, 0);
+                self.tiles[4].velocity = createVector(0.0, -1.0);
+            });
+            return self;
         }
-    };
-    $.getJSON('leveldata.json', function (leveldata) {
-        newObject.player = createPlayer(createVector(leveldata.player.position.x, leveldata.player.position.y));
-        leveldata.tiles.forEach(function (tileData) {
-            newObject.tiles.push(createTile(createVector(tileData.position.x, tileData.position.y)));
-        });
-        newObject.tiles[1].velocity.x = 1;
-    });
-    return newObject;
+    }.init();
 };
 
 

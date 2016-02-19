@@ -45,18 +45,18 @@ var createPlayer = function (position) {
                 if (!(prevKeys & LEFT)) {
                     this.animationFrame = 1;
                 }
-                this.velocity.x = -VELOCITY;
+                this.velocity = this.velocity.cloneAndSetX(-VELOCITY);
                 this.animateWalking(true);
                 this.animationFrameOffset = 5;
             } else if (keys & RIGHT) {
                 if (!(prevKeys & RIGHT)) {
                     this.animationFrame = 1;
                 }
-                this.velocity.x = VELOCITY;
+                this.velocity = this.velocity.cloneAndSetX(VELOCITY);
                 this.animateWalking(true);
                 this.animationFrameOffset = 0;
             } else {
-                this.velocity.x = 0.0;
+                this.velocity = this.velocity.cloneAndSetX(0.0);
                 this.animateWalking(false);
             }
         },
@@ -64,62 +64,57 @@ var createPlayer = function (position) {
         jump: function (tiles) {
             if (keys & UP && !(prevKeys & UP)) {
                 var isOnBlock = false;
-                this.position.y += 2;
+                this.position = this.position.addY(2.0);
                 for (i = 0; i < tiles.length; i += 1) {
                     if (this.testCollision(tiles[i])) {
                         isOnBlock = true;
                     }
                 }
-                this.position.y -= 2;
+                this.position = this.position.subtractY(2.0);
                 if (isOnBlock) {
-                    this.velocity.y = -JUMP_VELOCITY;
+                    this.velocity = this.velocity.cloneAndSetY(-JUMP_VELOCITY);
                 }
+            }
+            if (keys & FLY) {
+                this.velocity = this.velocity.cloneAndSetY(-5);
             }
         },
 
         accelerateByGravity: function () {
-            if (this.velocity.y < FALL_VELOCITY) {
-                this.velocity.y += 1.1;
+            if (this.velocity.getY() < FALL_VELOCITY) {
+                this.velocity = this.velocity.addY(1.1);
             }
         },
 
         update: function (tiles) {
-            for (i = 0; i < tiles.length; i++) {
-                if (this.testCollision(tiles[i])) {
-                    this.restorePositionToTileSurface(tiles[i]);
-                }
-            }
             this.walk();
             this.jump(tiles);
             this.accelerateByGravity();
-            this.storePosition();
 
-            var colliding = false;
+            tiles.forEach(function (tile) {
+                if (this.testCollision(tile)) {
+                    this.restorePositionToTileSurface(tile);
+                }
+            }, this);
 
-            this.position.x += this.velocity.x + this.platformVelocityX;
+            this.position = this.position.addX(this.velocity.getX() + this.platformVelocityX);
             this.platformVelocityX = 0.0;
-            for (i = 0; i < tiles.length; i++) {
-                if (this.testCollision(tiles[i])) {
-                    this.velocity.x = 0.0;
-                    this.restorePositionX(tiles[i]);
-                    colliding = true;
+            tiles.forEach(function (tile) {
+                if (this.testCollision(tile)) {
+                    this.velocity = this.velocity.cloneAndSetX(0.0);
+                    this.restorePositionX(tile);
                 }
-            }
+            }, this);
 
-            this.position.y += this.velocity.y;
-            for (i = 0; i < tiles.length; i++) {
-                if (this.testCollision(tiles[i])) {
-                    this.velocity.y = 0.0;
-                    this.restorePositionY(tiles[i]);
-                    this.platformVelocityX = tiles[i].velocity.x
+            this.position = this.position.addY(this.velocity.getY());
+            tiles.forEach(function (tile) {
+                if (this.testCollision(tile)) {
+                    this.velocity = this.velocity.cloneAndSetY(0.0);
+                    this.restorePositionY(tile);
+                    this.platformVelocityX = tile.velocity.getX();
                     colliding = true;
                 }
-            }
-            if (colliding) {
-                context.fillText('colliding', 100, 100);
-            } else {
-                context.fillText('not colliding', 100, 100);
-            }
+            }, this);
         },
 
 
@@ -127,7 +122,7 @@ var createPlayer = function (position) {
             this.image.draw(this.position, this.animationFrame + this.animationFrameOffset);
         },
         calculateCenterPosition: function () {
-            return createVector(this.position.x + this.size.y / 2.0, this.position.y + this.size.y / 2.0);
+            return this.position.add(createVector(this.size.getY(), this.size.getY()).divide(2.0));
         },
         testCollision: function (object) {
             var boundingBoxA = createBoundingBox(this.calculateCenterPosition(), this.size);
@@ -138,36 +133,25 @@ var createPlayer = function (position) {
                 return false;
             }
         },
-        storePosition: function () {
-            this.previousPosition.x = this.position.x;
-            this.previousPosition.y = this.position.y;
-        },
         restorePositionX: function (tile) {
-            var direction = this.position.clone().subtract(tile.position);
-            direction.normalize();
-            direction.x *= 0.1;
+            var direction = this.position.subtract(tile.position).normalize().multiply(0.1);
             while (this.testCollision(tile)) {
-                this.position.x += direction.x;
+                this.position = this.position.addX(direction.getX());
             }
         },
         restorePositionY: function (tile) {
-            var direction = this.position.clone().subtract(tile.position);
-            direction.normalize();
-            direction.y *= 0.1;
+            var direction = this.position.subtract(tile.position).normalize().multiply(0.1);
             while (this.testCollision(tile)) {
-                this.position.y += direction.y;
+                this.position = this.position.addY(direction.getY());
             }
         },
         restorePositionToTileSurface: function (tile) {
-            var direction = this.position.clone().subtract(tile.position);
-            direction.normalize();
-            direction.x *= 0.1;
-            direction.y *= 0.1;
+            var direction = this.position.subtract(tile.position).normalize().multiply(0.1);
             while (this.testCollision(tile)) {
-                if (Math.abs(direction.x) > Math.abs(direction.y)) {
-                    this.position.x += direction.x;
+                if (Math.abs(direction.getX()) > Math.abs(direction.getY())) {
+                    this.position = this.position.addX(direction.getX());
                 } else {
-                    this.position.y += direction.y;
+                    this.position = this.position.addY(direction.getY());
                 }
             }
         }

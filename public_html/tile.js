@@ -11,13 +11,13 @@ var createTile = function (position) {
         velocity: createVector(0.0, 0.0),
         size: createVector(TILE_SIZE_X, TILE_SIZE_Y),
         update: function () {
-            this.position.add(this.velocity);
+            this.position = this.position.add(this.velocity);
         },
         draw: function () {
             this.image.draw(this.position, 1);
         },
         calculateCenterPosition: function () {
-            return createVector(this.position.x + this.size.x / 2, this.position.y + this.size.y / 2);
+            return this.position.add(this.size.divide(2.0));
         }
     };
 };

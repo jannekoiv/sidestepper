@@ -41,20 +41,19 @@ var createAnimatedImage = function (filename) {
             }
         },
         draw: function (position, frameNumber) {
-            var sourcePosition = createVector(0, frameNumber * this.frameSize.y);
-            var destinationSize = createVector(this.frameSize.x, this.frameSize.y);
-            destinationSize.multiply(SCALING_FACTOR);
-            var scaledPosition = createVector(position.x, position.y);
-            scaledPosition.multiply(SCALING_FACTOR);
-            animatedImageGlobalData.context.drawImage(this.image,
-                sourcePosition.x,
-                sourcePosition.y,
-                this.frameSize.x,
-                this.frameSize.y,
-                scaledPosition.x,
-                scaledPosition.y,
-                destinationSize.x,
-                destinationSize.y);
+            var sourcePosition = createVector(0, frameNumber * this.frameSize.getY());
+            var destinationSize = this.frameSize.multiply(SCALING_FACTOR);
+            var scaledPosition = position.multiply(SCALING_FACTOR);
+            animatedImageGlobalData.context.drawImage(
+                this.image,
+                sourcePosition.getX(),
+                sourcePosition.getY(),
+                this.frameSize.getX(),
+                this.frameSize.getY(),
+                scaledPosition.getX(),
+                scaledPosition.getY(),
+                destinationSize.getX(),
+                destinationSize.getY());
         }
     };
     newObject.image.onload = newObject.onLoad.bind(newObject);

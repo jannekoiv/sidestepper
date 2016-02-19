@@ -3,18 +3,18 @@
 
 var createBoundingBox = function(position, size) {
     return {
-        position: createVector(position.x, position.y),
-        size: createVector(size.x, size.y),
+        position: position.clone(),
+        size: size.clone(),
         calculateDistance: function (boundingBox) {
-            return createVector(this.position.x, this.position.y).subtract(boundingBox.position);
+            return this.position.subtract(boundingBox.position);
         },
         calculateHalfSizeSum: function (boundingBox) {
-            return createVector(this.size.x + boundingBox.size.y, this.size.y + boundingBox.size.y).divide(2.0);
+            return this.size.add(boundingBox.size).multiply(0.5);
         },
         testCollision: function (boundingBox) {
             var distance = this.calculateDistance(boundingBox);
             var halfSizeSum = this.calculateHalfSizeSum(boundingBox);
-            if (Math.abs(distance.x) < halfSizeSum.x && Math.abs(distance.y) < halfSizeSum.y) {
+            if (Math.abs(distance.getX()) < halfSizeSum.getX() && Math.abs(distance.getY()) < halfSizeSum.getY()) {
                 return true;
             } else {
                 return false;
