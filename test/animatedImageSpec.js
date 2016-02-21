@@ -1,53 +1,40 @@
 /*
  */
 
-describe('initAnimatedImage', function () {
-    it('sets animated image callback functions and drawing context', function () {
-        initAnimatedImage(
-            function () {
-            },
-            function () {
-            },
-            new Object());
-        expect(animatedImageGlobalData.loadCallback).toEqual(jasmine.any(Function));
-        expect(animatedImageGlobalData.errorCallback).toEqual(jasmine.any(Function));
-        expect(animatedImageGlobalData.context).toEqual(jasmine.any(Object));
+describe("setLoadCallback", function () {
+    it("sets animated image initialization done callback function", function () {
+        AnimatedImage.setLoadCallback(function () {
+        });
+        expect(AnimatedImage.loadCallback).toEqual(jasmine.any(Function));
     });
 });
 
-describe('createAnimatedImage', function () {
-    var image = null;
-    beforeEach(function (done) {
-        initAnimatedImage(
-            function () {
-                done();
-            },
-            function () {
-                done();
-            },
-            null);
-        image = createAnimatedImage('base/sepi.png');
+describe("setErrorCallback", function () {
+    it("sets animated image initialization error callback function", function () {
+        AnimatedImage.setErrorCallback(function () {
+        });
+        expect(AnimatedImage.errorCallback).toEqual(jasmine.any(Function));
     });
-    it('creates animated image from filename', function () {
-        image.getFrameSize();
-        expect(image.frameSize.x).toEqual(32);
-        expect(image.frameSize.y).toEqual(32);
-        expect(image.frameCount).toEqual(17);
+});
+
+describe("setContext", function () {
+    it("sets animated image drawing context", function () {
+        AnimatedImage.setContext(new Object());
+        expect(AnimatedImage.context).toEqual(jasmine.any(Object));
     });
 });
 
 describe('create', function () {
     var image = null;
     beforeEach(function (done) {
-        initAnimatedImage(
-            function () {
-                done();
-            },
-            function () {
-                done();
-            },
-            null);
-        image = createAnimatedImage('base/sepi.png');
+        AnimatedImage.setContext(null);
+        AnimatedImage.setLoadCallback(function () {
+            done();
+        });
+        AnimatedImage.setErrorCallback(function () {
+            done();
+        });
+        image = AnimatedImage.create("base/sepi.png");
     });
     it('constructs animated image from filename', function () {
         image.getFrameSize();
@@ -60,15 +47,14 @@ describe('create', function () {
 describe('create', function () {
     var image = null;
     beforeEach(function (done) {
-        initAnimatedImage(
-            function () {
-                done();
-            },
-            function () {
-                done();
-            },
-            null);
-        image = createAnimatedImage('badfilename');
+        AnimatedImage.setContext(null);
+        AnimatedImage.setLoadCallback(function () {
+            done();
+        });
+        AnimatedImage.setErrorCallback(function () {
+            done();
+        });
+        image = AnimatedImage.create("badfilename");
     });
     it('constructs empty, size 0 image from nonexisting filename', function () {
         expect(image.frameSize.x).toEqual(0);
@@ -79,7 +65,7 @@ describe('create', function () {
 
 describe('getFrameSize', function () {
     it('returns size of single animation frame as vector', function () {
-        var image = createAnimatedImage('');
+        var image = AnimatedImage.create('');
         expect(image.getFrameSize().x).toEqual(0);
         expect(image.getFrameSize().y).toEqual(0);
     });
@@ -87,7 +73,7 @@ describe('getFrameSize', function () {
 
 describe('getFrameCount', function () {
     it('return number of animation frames', function () {
-        var image = createAnimatedImage('');
+        var image = AnimatedImage.create('');
         expect(image.getFrameCount()).toEqual(0);
     });
 });

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var nazi = {
+var Nazi = {
 	create: function (position) {
 		var newObject = Object.create(nazi);
 		newObject.image = createAnimatedImage('natsi.bmp');
