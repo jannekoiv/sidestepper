@@ -7,6 +7,7 @@ var UP = 4;
 var FLY = 16;
 var keys = 0;
 var prevKeys = 0;
+var context = null;
 
 var Game = {
     canvas: document.getElementById('myCanvas'),
@@ -20,6 +21,7 @@ var Game = {
         requestAnimationFrame(this.run.bind(this));
     },
     init: function () {
+        context = this.context;
         AnimatedImage.setContext(this.context);
         AnimatedImage.setErrorCallback(null);
         AnimatedImage.setLoadCallback(null);

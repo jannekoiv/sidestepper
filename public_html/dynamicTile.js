@@ -1,9 +1,6 @@
 /*
  */
 
-var TILE_SIZE_X = 32;
-var TILE_SIZE_Y = 32;
-
 var DynamicTile = {
     create: function(position, velocity, tileNumber) {
         var newObject = Object.create(DynamicTile);

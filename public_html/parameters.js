@@ -1,0 +1,10 @@
+/*
+ */
+
+var TILE_SIZE_X = 32;
+var TILE_SIZE_Y = 32;
+var PLAYER_SIZE_X = 20;
+var PLAYER_SIZE_Y = 31.9;
+var WALK_VELOCITY = 2;
+var JUMP_VELOCITY = 14;
+var FALL_VELOCITY_LIMIT = 14;

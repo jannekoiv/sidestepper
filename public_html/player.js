@@ -1,11 +1,6 @@
 /*
  */
 
-var PLAYER_SIZE_X = 20;
-var PLAYER_SIZE_Y = 32;
-var VELOCITY = 2;
-var JUMP_VELOCITY = 14;
-var FALL_VELOCITY = 14;
 
 var Player = {
     create: function (position) {
@@ -45,14 +40,14 @@ var Player = {
             if (!(prevKeys & LEFT)) {
                 this.animationFrame = 1;
             }
-            this.velocity = this.velocity.cloneAndSetX(-VELOCITY);
+            this.velocity = this.velocity.cloneAndSetX(-WALK_VELOCITY);
             this.animateWalking(true);
             this.animationFrameOffset = 5;
         } else if (keys & RIGHT) {
             if (!(prevKeys & RIGHT)) {
                 this.animationFrame = 1;
             }
-            this.velocity = this.velocity.cloneAndSetX(VELOCITY);
+            this.velocity = this.velocity.cloneAndSetX(WALK_VELOCITY);
             this.animateWalking(true);
             this.animationFrameOffset = 0;
         } else {
@@ -79,7 +74,7 @@ var Player = {
         }
     },
     accelerateByGravity: function () {
-        if (this.velocity.getY() < FALL_VELOCITY) {
+        if (this.velocity.getY() < FALL_VELOCITY_LIMIT) {
             this.velocity = this.velocity.addY(1.1);
         }
     },
@@ -94,6 +89,7 @@ var Player = {
         }, this);
 
         this.position = this.position.addX(this.velocity.getX() + this.platformVelocityX);
+
         this.platformVelocityX = 0.0;
         tiles.forEach(function (tile) {
             if (this.testCollision(tile)) {
