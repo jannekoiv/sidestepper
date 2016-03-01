@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var Nazi = {
+var Nazi = $.extend(Object.create(BaseObject), {
 	create: function (position) {
 		var newObject = Object.create(nazi);
 		newObject.image = createAnimatedImage('natsi.bmp');
@@ -17,4 +17,4 @@ var Nazi = {
 	draw: function () {
 		this.image.draw(this.position, 0);
 	}
-};
+});

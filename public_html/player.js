@@ -1,8 +1,8 @@
 /*
  */
 
-
-var Player = {
+var Player = $.extend(Object.create(BaseObject), {
+    size: Vector.create(PLAYER_SIZE_X, PLAYER_SIZE_Y),
     create: function (position) {
         var newObject = Object.create(Player);
         newObject.image = AnimatedImage.create('sepi.bmp');
@@ -10,7 +10,6 @@ var Player = {
         newObject.previousPosition = position.clone();
         newObject.velocity = Vector.create(0.0, 0.0);
         newObject.platformVelocityX = 0.0;
-        newObject.size = Vector.create(PLAYER_SIZE_X, PLAYER_SIZE_Y);
         newObject.animationFrame = 1;
         newObject.animationDirection = 1;
         newObject.animationFrameOffset = 0;
@@ -114,15 +113,6 @@ var Player = {
     calculateCenterPosition: function () {
         return this.position.add(Vector.create(this.size.getY(), this.size.getY()).multiply(0.5));
     },
-    testCollision: function (object) {
-        var boundingBoxA = BoundingBox.create(this.calculateCenterPosition(), this.size);
-        var boundingBoxB = BoundingBox.create(object.calculateCenterPosition(), object.size);
-        if (boundingBoxA.testCollision(boundingBoxB)) {
-            return true;
-        } else {
-            return false;
-        }
-    },
     restorePositionX: function (tile) {
         var direction = this.position.subtract(tile.position).normalize().multiply(0.1);
         while (this.testCollision(tile)) {
@@ -145,4 +135,4 @@ var Player = {
             }
         }
     }
-};
+});
